@@ -1,11 +1,20 @@
 import './Footer.css';
 
 export function Footer() {
-  const currentYear = new Date().getFullYear();
-  
   return (
     <footer className="footer">
-      <p>© {currentYear} runawaydevil — skull-guides</p>
+      <p>
+        Developed by{' '}
+        <a 
+          href="https://github.com/runawaydevil" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="footer-link"
+        >
+          runawaydevil
+        </a>
+        {' '}— 2026
+      </p>
     </footer>
   );
 }
