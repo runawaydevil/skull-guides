@@ -16,7 +16,6 @@ export function Home() {
       <div className="home-container">
         <div className="home-header">
           <img src={`${import.meta.env.BASE_URL}sg.png`} alt="skull-guides logo" className="home-logo" />
-          <h1 className="home-title">skull-guides</h1>
         </div>
         <p className="home-subtitle">
           Hacking Guide - Ethical Hacking Modules

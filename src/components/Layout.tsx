@@ -3,6 +3,7 @@ import { RepoBadge } from './RepoBadge';
 import { Toc, parseHeadings } from './Toc';
 import { Footer } from './Footer';
 import type { RepoTarget } from '../lib/types';
+import { getModulesForRepo } from '../lib/modules';
 import './Layout.css';
 
 interface LayoutProps {
@@ -15,6 +16,7 @@ interface LayoutProps {
 export function Layout({ target, content, children, onOpenGitHub }: LayoutProps) {
   const tocItems = parseHeadings(content);
   const fileName = target.path.split('/').pop() || target.path;
+  const modules = getModulesForRepo(target.owner, target.repo);
   
   return (
     <div className="layout">
@@ -23,7 +25,12 @@ export function Layout({ target, content, children, onOpenGitHub }: LayoutProps)
           <img src={`${import.meta.env.BASE_URL}sg.png`} alt="skull-guides logo" className="sidebar-logo" />
         </div>
         <RepoBadge target={target} />
-        <Toc items={tocItems} />
+        <Toc 
+          items={tocItems} 
+          modules={modules || undefined}
+          currentPath={target.path}
+          target={target}
+        />
       </aside>
       
       <main className="main-content">

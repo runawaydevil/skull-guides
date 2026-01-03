@@ -31,3 +31,14 @@ export const REPO_NAME = 'skull-guides';
 export const REPO_BRANCH = 'main';
 export const DOCS_PATH = 'docs';
 
+/**
+ * Get modules for a specific repository
+ * Returns modules if the repository matches, null otherwise
+ */
+export function getModulesForRepo(owner: string, repo: string): Module[] | null {
+  if (owner === REPO_OWNER && repo === REPO_NAME) {
+    return modules;
+  }
+  return null;
+}
+

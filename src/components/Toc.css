@@ -59,3 +59,74 @@
 .toc-link:hover {
   color: var(--primary-color, #000000);
 }
+
+.toc-modules-section {
+  margin-bottom: 1.5rem;
+}
+
+.toc-headings-section {
+  margin-top: 1.5rem;
+}
+
+.toc-section-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #666666);
+  margin: 0 0 0.5rem 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--border-color, #e0e0e0);
+}
+
+.toc-modules-section .toc-section-title {
+  border-top: none;
+  padding-top: 0;
+}
+
+.toc-modules-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-module-item {
+  margin: 0.375rem 0;
+}
+
+.toc-module-link {
+  display: flex;
+  align-items: flex-start;
+  color: var(--text-secondary, #666666);
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: color 0.2s;
+  word-break: break-word;
+  padding: 0.25rem 0;
+}
+
+.toc-module-link:hover {
+  color: var(--primary-color, #000000);
+}
+
+.toc-module-active .toc-module-link {
+  color: var(--primary-color, #000000);
+  font-weight: 600;
+}
+
+.toc-module-number {
+  display: inline-block;
+  min-width: 1.5rem;
+  margin-right: 0.5rem;
+  font-weight: 600;
+  color: var(--text-secondary, #666666);
+}
+
+.toc-module-active .toc-module-number {
+  color: var(--primary-color, #000000);
+}
+
+.toc-module-name {
+  flex: 1;
+}
