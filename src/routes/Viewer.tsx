@@ -43,18 +43,28 @@ export function Viewer() {
     setLoading(true);
     setError(null);
     
+    // Flag to prevent state updates if component unmounts
+    let cancelled = false;
+    
     fetchMarkdown(newTarget)
       .then((text) => {
-        setContent(text);
-        setError(null);
+        if (!cancelled) {
+          setContent(text);
+          setError(null);
+          setLoading(false);
+        }
       })
       .catch((err: FetchError) => {
-        setError(err);
-        setContent('');
-      })
-      .finally(() => {
-        setLoading(false);
+        if (!cancelled) {
+          setError(err);
+          setContent('');
+          setLoading(false);
+        }
       });
+    
+    return () => {
+      cancelled = true;
+    };
   }, [owner, repo, branch, path]);
   
   const handleRetry = () => {
