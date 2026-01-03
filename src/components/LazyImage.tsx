@@ -54,6 +54,19 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
     };
   }, [loading, shouldLoad]);
 
+  // Check if image is already loaded (from cache)
+  useEffect(() => {
+    if (!shouldLoad) return;
+    
+    const img = imgRef.current;
+    if (!img) return;
+
+    // If image is already complete (cached), mark as loaded
+    if (img.complete && img.naturalHeight !== 0) {
+      setIsLoaded(true);
+    }
+  }, [shouldLoad]);
+
   const handleLoad = () => {
     setIsLoaded(true);
   };
@@ -85,12 +98,8 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
             onLoad={handleLoad}
             onError={handleError}
             style={{ 
-              display: isLoaded ? 'block' : 'none',
-              visibility: isLoaded ? 'visible' : 'hidden',
-              position: isLoaded ? 'static' : 'absolute',
-              width: isLoaded ? 'auto' : '1px',
-              height: isLoaded ? 'auto' : '1px',
-              opacity: isLoaded ? 1 : 0
+              opacity: isLoaded ? 1 : 0,
+              transition: 'opacity 0.3s ease-in-out'
             }}
             loading="lazy"
           />

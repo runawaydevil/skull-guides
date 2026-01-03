@@ -67,6 +67,7 @@
   transition: opacity 0.3s ease-in-out;
   position: relative;
   z-index: 2;
+  display: block;
 }
 
 .lazy-image-loaded {
