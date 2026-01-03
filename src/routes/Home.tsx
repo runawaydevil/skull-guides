@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { modules, REPO_OWNER, REPO_NAME, REPO_BRANCH, DOCS_PATH } from '../lib/modules';
 import { encodePath } from '../lib/githubUrl';
+import { Footer } from '../components/Footer';
 import './Home.css';
 
 export function Home() {
@@ -25,6 +26,7 @@ export function Home() {
           Access Content
         </button>
       </div>
+      <Footer />
     </div>
   );
 }
