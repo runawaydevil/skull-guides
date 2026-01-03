@@ -23,7 +23,7 @@ export function Viewer() {
   const [error, setError] = useState<FetchError | null>(null);
   
   // Prefetch adjacent modules when target is available
-  usePrefetch(target || { owner: '', repo: '', branch: '', path: '' });
+  usePrefetch(target);
   
   useEffect(() => {
     if (!owner || !repo || !branch || !path) {

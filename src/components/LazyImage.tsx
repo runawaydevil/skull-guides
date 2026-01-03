@@ -12,6 +12,7 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
   const [shouldLoad, setShouldLoad] = useState(loading === 'eager');
+  const containerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLImageElement>(null);
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -20,8 +21,17 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
       return;
     }
 
-    const imgElement = imgRef.current;
-    if (!imgElement) return;
+    const containerElement = containerRef.current;
+    if (!containerElement) return;
+
+    // Check if already visible
+    const rect = containerElement.getBoundingClientRect();
+    const isVisible = rect.top < window.innerHeight + 50 && rect.bottom > -50;
+    
+    if (isVisible) {
+      setShouldLoad(true);
+      return;
+    }
 
     observerRef.current = new IntersectionObserver(
       (entries) => {
@@ -37,7 +47,7 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
       }
     );
 
-    observerRef.current.observe(imgElement);
+    observerRef.current.observe(containerElement);
 
     return () => {
       observerRef.current?.disconnect();
@@ -54,7 +64,7 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
   };
 
   return (
-    <div className={`lazy-image-container ${className || ''}`}>
+    <div ref={containerRef} className={`lazy-image-container ${className || ''}`}>
       {!shouldLoad && (
         <div className="lazy-image-placeholder" aria-hidden="true">
           <div className="lazy-image-skeleton"></div>
@@ -74,7 +84,15 @@ export function LazyImage({ src, alt, className, loading = 'lazy' }: LazyImagePr
             className={`lazy-image ${isLoaded ? 'lazy-image-loaded' : 'lazy-image-loading'}`}
             onLoad={handleLoad}
             onError={handleError}
-            style={{ display: isLoaded ? 'block' : 'none' }}
+            style={{ 
+              display: isLoaded ? 'block' : 'none',
+              visibility: isLoaded ? 'visible' : 'hidden',
+              position: isLoaded ? 'static' : 'absolute',
+              width: isLoaded ? 'auto' : '1px',
+              height: isLoaded ? 'auto' : '1px',
+              opacity: isLoaded ? 1 : 0
+            }}
+            loading="lazy"
           />
           {hasError && (
             <div className="lazy-image-error">

@@ -96,17 +96,25 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
     }
   };
   
+  if (!content || content.trim() === '') {
+    return (
+      <div className="markdown-view">
+        <p>No content available.</p>
+      </div>
+    );
+  }
+
   return (
     <>
       <div className="markdown-view">
         <ReactMarkdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[
-          rehypeRaw,
-          rehypeSanitize,
-          rehypeHighlight,
-        ]}
-        components={{
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[
+            rehypeRaw,
+            rehypeSanitize,
+            rehypeHighlight,
+          ]}
+          components={{
           h1: ({ children, ...props }) => {
             const id = generateSlug(children);
             return <h1 id={id} {...props}>{children}</h1>;
@@ -175,7 +183,7 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
           },
         }}
       >
-          {content}
+            {content}
         </ReactMarkdown>
       </div>
       <ModuleNavigation target={target} />
