@@ -77,16 +77,22 @@ The project is configured for automatic deployment to GitHub Pages via GitHub Ac
 
 ### GitHub Pages Setup
 
-1. Enable GitHub Pages in repository settings:
-   - Go to Settings → Pages
-   - Under "Source", select "GitHub Actions"
+**IMPORTANT:** GitHub Pages must be enabled in the repository settings before the workflow can deploy.
+
+1. Enable GitHub Pages manually:
+   - Navigate to your repository on GitHub
+   - Go to **Settings** → **Pages** (in the left sidebar)
+   - Under **"Source"**, select **"GitHub Actions"**
+   - Click **Save**
 
 2. The workflow is already configured:
    - Workflow file: `.github/workflows/pages.yml`
    - Automatic deployment on push to `main` branch
+   - The workflow will attempt to enable Pages automatically, but manual setup is recommended
 
 3. Site URL:
    - After first deployment: `https://runawaydevil.github.io/skull-guides/`
+   - The site will be available at this URL once the first deployment completes successfully
 
 ### Base Path Configuration
 
