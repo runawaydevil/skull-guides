@@ -204,4 +204,4 @@ runawaydevil
 
 ---
 
-Copyright (c) 2024 runawaydevil
+Copyright (c) 2026 runawaydevil
