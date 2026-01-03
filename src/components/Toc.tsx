@@ -1,9 +1,11 @@
 import { useNavigate } from 'react-router-dom';
+import { useRef } from 'react';
 import type { TocItem } from '../lib/types';
 import type { Module } from '../lib/modules';
 import type { RepoTarget } from '../lib/types';
 import { encodePath } from '../lib/githubUrl';
 import { DOCS_PATH } from '../lib/modules';
+import { useActiveSection } from '../hooks/useActiveSection';
 import './Toc.css';
 
 interface TocProps {
@@ -15,6 +17,9 @@ interface TocProps {
 
 export function Toc({ items, modules, currentPath, target }: TocProps) {
   const navigate = useNavigate();
+  const tocRef = useRef<HTMLElement>(null);
+  const headingIds = items.map((item) => item.slug);
+  const activeSectionId = useActiveSection(headingIds);
   
   const handleHeadingClick = (e: React.MouseEvent<HTMLAnchorElement>, slug: string) => {
     e.preventDefault();
@@ -48,7 +53,7 @@ export function Toc({ items, modules, currentPath, target }: TocProps) {
   };
   
   return (
-    <nav className="toc">
+    <nav className="toc" ref={tocRef}>
       <h3 className="toc-title">Table of Contents</h3>
       
       {hasModules && (
@@ -78,20 +83,23 @@ export function Toc({ items, modules, currentPath, target }: TocProps) {
         <div className="toc-headings-section">
           {hasModules && <h4 className="toc-section-title">Sections</h4>}
           <ul className="toc-list">
-            {items.map((item, index) => (
-              <li
-                key={index}
-                className={`toc-item toc-item-depth-${item.depth}`}
-              >
-                <a 
-                  href={`#${item.slug}`} 
-                  className="toc-link"
-                  onClick={(e) => handleHeadingClick(e, item.slug)}
+            {items.map((item, index) => {
+              const isActive = activeSectionId === item.slug;
+              return (
+                <li
+                  key={index}
+                  className={`toc-item toc-item-depth-${item.depth} ${isActive ? 'toc-item-active' : ''}`}
                 >
-                  {item.text}
-                </a>
-              </li>
-            ))}
+                  <a 
+                    href={`#${item.slug}`} 
+                    className={`toc-link ${isActive ? 'toc-link-active' : ''}`}
+                    onClick={(e) => handleHeadingClick(e, item.slug)}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </div>
       )}

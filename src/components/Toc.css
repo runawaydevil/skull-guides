@@ -1,5 +1,10 @@
 .toc {
   padding: 1rem;
+  position: sticky;
+  top: 0;
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-bottom: 2rem;
 }
 
 .toc-title {
@@ -58,6 +63,25 @@
 
 .toc-link:hover {
   color: var(--primary-color, #000000);
+}
+
+.toc-item-active .toc-link,
+.toc-link-active {
+  color: var(--primary-color, #000000);
+  font-weight: 600;
+  position: relative;
+}
+
+.toc-item-active .toc-link::before {
+  content: '';
+  position: absolute;
+  left: -0.75rem;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3px;
+  height: 1.2em;
+  background-color: var(--primary-color, #000000);
+  border-radius: 2px;
 }
 
 .toc-modules-section {

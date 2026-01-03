@@ -7,6 +7,7 @@ import { Layout } from '../components/Layout';
 import { MarkdownView } from '../components/MarkdownView';
 import { LoadingState } from '../components/LoadingState';
 import { ErrorState } from '../components/ErrorState';
+import { usePrefetch } from '../hooks/usePrefetch';
 
 export function Viewer() {
   const { owner, repo, branch, '*': path } = useParams<{
@@ -20,6 +21,9 @@ export function Viewer() {
   const [content, setContent] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<FetchError | null>(null);
+  
+  // Prefetch adjacent modules when target is available
+  usePrefetch(target || { owner: '', repo: '', branch: '', path: '' });
   
   useEffect(() => {
     if (!owner || !repo || !branch || !path) {

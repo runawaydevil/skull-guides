@@ -1,0 +1,39 @@
+.share-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--bg-primary, #ffffff);
+  border: 1px solid var(--border-color, #e0e0e0);
+  border-radius: 4px;
+  color: var(--text-primary, #000000);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.share-button:hover {
+  background-color: var(--bg-hover, #e8e8e8);
+  border-color: var(--primary-color, #000000);
+}
+
+.share-button:active {
+  transform: scale(0.98);
+}
+
+.share-button-copied {
+  background-color: var(--primary-color, #000000);
+  color: white;
+  border-color: var(--primary-color, #000000);
+}
+
+.share-icon {
+  font-size: 1rem;
+  line-height: 1;
+}
+
+.share-text {
+  font-weight: 500;
+}
+

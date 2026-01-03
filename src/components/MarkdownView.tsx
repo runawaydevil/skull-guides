@@ -13,6 +13,8 @@ import {
   imageToRawUrl,
 } from '../lib/markdownLinks';
 import { encodePath } from '../lib/githubUrl';
+import { LazyImage } from './LazyImage';
+import { ModuleNavigation } from './ModuleNavigation';
 import './MarkdownView.css';
 import 'highlight.js/styles/default.css';
 
@@ -95,8 +97,9 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
   };
   
   return (
-    <div className="markdown-view">
-      <ReactMarkdown
+    <>
+      <div className="markdown-view">
+        <ReactMarkdown
         remarkPlugins={[remarkGfm]}
         rehypePlugins={[
           rehypeRaw,
@@ -148,7 +151,7 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
             );
           },
           img: ({ src, alt, ...props }) => {
-            if (!src) return <img {...props} alt={alt} />;
+            if (!src) return null;
             
             // Convert relative images to raw GitHub URL
             const imageSrc = isExternalLink(src)
@@ -156,11 +159,10 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
               : imageToRawUrl(target, src);
             
             return (
-              <img
-                {...props}
+              <LazyImage
                 src={imageSrc}
                 alt={alt}
-                loading="lazy"
+                className={props.className}
               />
             );
           },
@@ -173,9 +175,11 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
           },
         }}
       >
-        {content}
-      </ReactMarkdown>
-    </div>
+          {content}
+        </ReactMarkdown>
+      </div>
+      <ModuleNavigation target={target} />
+    </>
   );
 }
 

@@ -9,6 +9,14 @@
   --primary-hover: #333333;
   --error-color: #cc0000;
   --code-bg: #f5f5f5;
+  
+  /* Typography */
+  --font-size-base: 16px;
+  --font-size-scale: 1;
+  --font-size-computed: calc(var(--font-size-base) * var(--font-size-scale));
+  --font-family-serif: 'Georgia', 'Times New Roman', serif;
+  --font-family-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 * {
@@ -22,14 +30,14 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: var(--font-family-sans);
+  font-size: var(--font-size-computed);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  line-height: 1.6;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
 }
 
 code {

@@ -1,0 +1,33 @@
+.font-controls {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.font-control-btn {
+  background: transparent;
+  border: 1px solid var(--border-color, #e0e0e0);
+  color: var(--text-primary, #000000);
+  padding: 0.375rem 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: all 0.2s;
+  min-width: 2rem;
+}
+
+.font-control-btn:hover:not(:disabled) {
+  background-color: var(--bg-hover, #e8e8e8);
+  border-color: var(--primary-color, #000000);
+}
+
+.font-control-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.font-control-btn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
