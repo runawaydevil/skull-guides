@@ -7,7 +7,6 @@ import rehypeHighlight from 'rehype-highlight';
 import type { RepoTarget } from '../lib/types';
 import {
   isMarkdownLink,
-  isImageLink,
   isExternalLink,
   isAnchorLink,
   resolveRelativePath,
@@ -62,7 +61,6 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
             if (!href) return <a {...props}>{children}</a>;
             
             const isExternal = isExternalLink(href);
-            const isAnchor = isAnchorLink(href);
             const isMarkdown = isMarkdownLink(href);
             
             return (
@@ -96,9 +94,6 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
             );
           },
           code: ({ className, children, ...props }) => {
-            const match = /language-(\w+)/.exec(className || '');
-            const language = match ? match[1] : '';
-            
             return (
               <code className={className} {...props}>
                 {children}

@@ -2,6 +2,8 @@
 
 Static site for viewing and navigating Markdown files directly from GitHub repositories.
 
+**Live Site:** https://runawaydevil.github.io/skull-guides/
+
 ## Description
 
 skull-guides is a React-based static site that fetches and renders Markdown files from GitHub repositories. It provides navigation between `.md` files within the same repository without requiring local file copies. The application uses GitHub's raw content API to fetch files on-demand with intelligent caching.
