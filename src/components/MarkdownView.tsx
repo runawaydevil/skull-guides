@@ -74,25 +74,29 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
   const navigate = useNavigate();
   
   const handleLinkClick = (href: string, event: React.MouseEvent<HTMLAnchorElement>) => {
-    // Anchor links - let browser handle
-    if (isAnchorLink(href)) {
-      return;
-    }
-    
-    // External links - open in new tab
-    if (isExternalLink(href)) {
-      return; // Let default behavior happen
-    }
-    
-    // Check if it's a markdown link
-    if (isMarkdownLink(href)) {
-      event.preventDefault();
-      const resolvedPath = resolveRelativePath(target.path, href);
+    try {
+      // Anchor links - let browser handle
+      if (isAnchorLink(href)) {
+        return;
+      }
       
-      // Navigate to new markdown file
-      navigate(
-        `/view/${target.owner}/${target.repo}/${target.branch}/${encodePath(resolvedPath)}`
-      );
+      // External links - open in new tab
+      if (isExternalLink(href)) {
+        return; // Let default behavior happen
+      }
+      
+      // Check if it's a markdown link
+      if (isMarkdownLink(href)) {
+        event.preventDefault();
+        const resolvedPath = resolveRelativePath(target.path, href);
+        
+        // Navigate to new markdown file
+        navigate(
+          `/view/${target.owner}/${target.repo}/${target.branch}/${encodePath(resolvedPath)}`
+        );
+      }
+    } catch (error) {
+      console.error('Error handling link click:', error);
     }
   };
   
@@ -104,10 +108,11 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
     );
   }
 
-  return (
-    <>
-      <div className="markdown-view">
-        <ReactMarkdown
+  try {
+    return (
+      <>
+        <div className="markdown-view">
+          <ReactMarkdown
           remarkPlugins={[remarkGfm]}
           rehypePlugins={[
             rehypeRaw,
@@ -116,28 +121,58 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
           ]}
           components={{
           h1: ({ children, ...props }) => {
-            const id = generateSlug(children);
-            return <h1 id={id} {...props}>{children}</h1>;
+            try {
+              const id = generateSlug(children);
+              return <h1 id={id} {...props}>{children}</h1>;
+            } catch (error) {
+              console.error('Error generating h1 slug:', error);
+              return <h1 {...props}>{children}</h1>;
+            }
           },
           h2: ({ children, ...props }) => {
-            const id = generateSlug(children);
-            return <h2 id={id} {...props}>{children}</h2>;
+            try {
+              const id = generateSlug(children);
+              return <h2 id={id} {...props}>{children}</h2>;
+            } catch (error) {
+              console.error('Error generating h2 slug:', error);
+              return <h2 {...props}>{children}</h2>;
+            }
           },
           h3: ({ children, ...props }) => {
-            const id = generateSlug(children);
-            return <h3 id={id} {...props}>{children}</h3>;
+            try {
+              const id = generateSlug(children);
+              return <h3 id={id} {...props}>{children}</h3>;
+            } catch (error) {
+              console.error('Error generating h3 slug:', error);
+              return <h3 {...props}>{children}</h3>;
+            }
           },
           h4: ({ children, ...props }) => {
-            const id = generateSlug(children);
-            return <h4 id={id} {...props}>{children}</h4>;
+            try {
+              const id = generateSlug(children);
+              return <h4 id={id} {...props}>{children}</h4>;
+            } catch (error) {
+              console.error('Error generating h4 slug:', error);
+              return <h4 {...props}>{children}</h4>;
+            }
           },
           h5: ({ children, ...props }) => {
-            const id = generateSlug(children);
-            return <h5 id={id} {...props}>{children}</h5>;
+            try {
+              const id = generateSlug(children);
+              return <h5 id={id} {...props}>{children}</h5>;
+            } catch (error) {
+              console.error('Error generating h5 slug:', error);
+              return <h5 {...props}>{children}</h5>;
+            }
           },
           h6: ({ children, ...props }) => {
-            const id = generateSlug(children);
-            return <h6 id={id} {...props}>{children}</h6>;
+            try {
+              const id = generateSlug(children);
+              return <h6 id={id} {...props}>{children}</h6>;
+            } catch (error) {
+              console.error('Error generating h6 slug:', error);
+              return <h6 {...props}>{children}</h6>;
+            }
           },
           a: ({ href, children, ...props }) => {
             if (!href) return <a {...props}>{children}</a>;
@@ -159,20 +194,25 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
             );
           },
           img: ({ src, alt, ...props }) => {
-            if (!src) return null;
-            
-            // Convert relative images to raw GitHub URL
-            const imageSrc = isExternalLink(src)
-              ? src
-              : imageToRawUrl(target, src);
-            
-            return (
-              <LazyImage
-                src={imageSrc}
-                alt={alt}
-                className={props.className}
-              />
-            );
+            try {
+              if (!src) return null;
+              
+              // Convert relative images to raw GitHub URL
+              const imageSrc = isExternalLink(src)
+                ? src
+                : imageToRawUrl(target, src);
+              
+              return (
+                <LazyImage
+                  src={imageSrc}
+                  alt={alt}
+                  className={props.className}
+                />
+              );
+            } catch (error) {
+              console.error('Error rendering image:', error);
+              return null;
+            }
           },
           code: ({ className, children, ...props }) => {
             return (
@@ -188,6 +228,14 @@ export function MarkdownView({ content, target }: MarkdownViewProps) {
       </div>
       <ModuleNavigation target={target} />
     </>
-  );
+    );
+  } catch (error) {
+    console.error('Error rendering markdown:', error);
+    return (
+      <div className="markdown-view">
+        <p>Error rendering content. Please try refreshing the page.</p>
+      </div>
+    );
+  }
 }
 

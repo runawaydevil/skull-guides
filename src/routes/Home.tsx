@@ -8,11 +8,15 @@ export function Home() {
   const navigate = useNavigate();
   
   const handleAccessContent = () => {
-    // Navigate to first module
-    const firstModule = modules[0];
-    if (firstModule) {
-      const path = `${DOCS_PATH}/${firstModule.file}`;
-      navigate(`/view/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/${encodePath(path)}`);
+    try {
+      // Navigate to first module
+      const firstModule = modules[0];
+      if (firstModule) {
+        const path = `${DOCS_PATH}/${firstModule.file}`;
+        navigate(`/view/${REPO_OWNER}/${REPO_NAME}/${REPO_BRANCH}/${encodePath(path)}`);
+      }
+    } catch (error) {
+      console.error('Error navigating to content:', error);
     }
   };
   

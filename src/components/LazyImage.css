@@ -3,6 +3,7 @@
   display: inline-block;
   width: 100%;
   max-width: 100%;
+  min-height: 200px;
 }
 
 .lazy-image-placeholder {
@@ -63,11 +64,11 @@
   height: auto;
   border-radius: 4px;
   margin: 1em 0;
-  opacity: 0;
   transition: opacity 0.3s ease-in-out;
   position: relative;
   z-index: 2;
   display: block;
+  width: 100%;
 }
 
 .lazy-image-loaded {
