@@ -1,33 +1,207 @@
+# skull-guides
 
-<p align="center">
-<img src="https://cdn-icons-png.flaticon.com/512/12503/12503225.png", width="200", height="200">
-</p>
+Static site for viewing and navigating Markdown files directly from GitHub repositories.
 
-<h1 align="center"> HACKING GUIDE</h1>
-<h4 align="center">HACKING GUIDE is a collection of hacking guide books.</h4>
+## Description
 
-### DESCRIPTION 
-HACKING GUIDE is a comprehensive resource for aspiring ethical hackers, providing step-by-step tutorials and tools to enhance cybersecurity knowledge. This guide equips users with essential skills to understand and mitigate potential security risks. HACKING GUIDE covers various aspects of ethical hacking, including penetration testing, vulnerability analysis, and network security. Users can explore practical demonstrations and gain insights into the latest cybersecurity techniques. It's important to note that HACKING GUIDE is designed for educational purposes, promoting ethical hacking practices and adhering to strict ethical standards. The guide emphasizes responsible and legal use of hacking knowledge to strengthen digital defenses and protect against potential threats.
+skull-guides is a React-based static site that fetches and renders Markdown files from GitHub repositories. It provides navigation between `.md` files within the same repository without requiring local file copies. The application uses GitHub's raw content API to fetch files on-demand with intelligent caching.
 
-1. [Module 01 - Introduction to Ethical Hacking](https://github.com/0xbitx/Hacking-guide/blob/master/1-Introduction.md)
-2. [Module 02 - Footprinting and Reconnaissance](https://github.com/0xbitx/Hacking-guide/blob/master/2-Footprinting-and-Reconnaissance.md)
-3. [Module 03 - Scanning Networks](https://github.com/0xbitx/Hacking-guide/blob/master/3-Scanning-Networks.md)
-4. [Module 04 - Enumeration](https://github.com/0xbitx/Hacking-guide/blob/master/2-Scanning-and-Enumeration.md)
-5. [Module 05 - Vulnerability Analysis](https://github.com/0xbitx/Hacking-guide/blob/main/5-Vulnerability-Analysis.md)
-6. [Module 06 - System Hacking](https://github.com/0xbitx/Hacking-guide/blob/master/6-System-Hacking.md)
-7. [Module 07 - Malware Threats](https://github.com/0xbitx/Hacking-guide/blob/master/7-Malware.md)
-8. [Module 08 - Sniffing](https://github.com/0xbitx/Hacking-guide/blob/master/8-Sniffing.md)
-9. [Module 09 - Social Engineering](https://github.com/0xbitx/Hacking-guide/blob/master/9-Social-Engineering.md)
-10. [Module 10 - Denial of Service](https://github.com/0xbitx/Hacking-guide/blob/master/10-Denial-of-Service.md)
-11. [Module 11 - Session Hijacking](https://github.com/0xbitx/Hacking-guide/blob/master/11-Session-Hijacking.md)
-12. [Module 12 - Evading IDS, Firewalls, and Honeypots](https://github.com/0xbitx/Hacking-guide/blob/master/12-Evading-IDS-Firewalls-and-Honeypots.md)
-13. [Module 13 - Hacking Web Servers](https://github.com/0xbitx/Hacking-guide/blob/master/13-Hacking-Web-Servers.md)
-14. [Module 14 - Hacking Web Applications](https://github.com/0xbitx/Hacking-guide/blob/master/14-Hacking-Web-Applications.md)
-15. [Module 15 - SQL Injection](https://github.com/0xbitx/Hacking-guide/blob/master/14-Pentesting.md)
-16. [Module 16 - Hacking Wireless Networks](https://github.com/0xbitx/Hacking-guide/blob/master/16-Hacking-Wireless-Networks.md)
-17. [Module 17 - Hacking Mobile Platforms](https://github.com/0xbitx/Hacking-guide/blob/master/17-Hacking-Mobile-Platforms-and-IoT.md)
-18. [Module 18 - Hacking IoT and OT Hacking](https://github.com/0xbitx/Hacking-guide/blob/master/17-Hacking-Mobile-Platforms-and-IoT.md)
-19. [Module 19 - Cloud Computing](https://github.com/0xbitx/Hacking-guide/blob/master/19-Cloud%20Computing.md)
-20. [Module 20 - Cryptography](https://github.com/0xbitx/Hacking-guide/blob/master/20-Cryptography.md)
+## Features
 
-    
+- Markdown rendering with GitHub Flavored Markdown (GFM) support
+- Internal navigation between `.md` files in the same repository
+- Automatic conversion of relative image paths to raw GitHub URLs
+- Auto-generated table of contents from document headings
+- Two-layer caching system (memory + localStorage) with 24h TTL
+- XSS sanitization via rehype-sanitize
+- Syntax highlighting for code blocks
+- Responsive layout with fixed sidebar
+
+## Tech Stack
+
+- React 18 + TypeScript
+- Vite (build tool)
+- React Router v6 (HashRouter for GitHub Pages compatibility)
+- react-markdown (Markdown rendering)
+- remark-gfm (GFM support)
+- rehype-raw + rehype-sanitize (HTML sanitization)
+- rehype-highlight (syntax highlighting)
+
+## Installation
+
+### Requirements
+
+- Node.js LTS (v18 or higher)
+- npm or yarn
+
+### Setup
+
+```bash
+git clone https://github.com/runawaydevil/skull-guides.git
+cd skull-guides
+npm install
+```
+
+## Development
+
+Start the development server:
+
+```bash
+npm run dev
+```
+
+The application will be available at `http://localhost:5173`
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+
+## Production Build
+
+Build the application:
+
+```bash
+npm run build
+```
+
+Output will be in the `dist/` directory.
+
+## Deployment
+
+The project is configured for automatic deployment to GitHub Pages via GitHub Actions.
+
+### GitHub Pages Setup
+
+1. Enable GitHub Pages in repository settings:
+   - Go to Settings → Pages
+   - Under "Source", select "GitHub Actions"
+
+2. The workflow is already configured:
+   - Workflow file: `.github/workflows/pages.yml`
+   - Automatic deployment on push to `main` branch
+
+3. Site URL:
+   - After first deployment: `https://runawaydevil.github.io/skull-guides/`
+
+### Base Path Configuration
+
+The project uses `/skull-guides/` as the base path for GitHub Pages. This is configured in `vite.config.ts`:
+
+```typescript
+base: process.env.NODE_ENV === 'production' ? '/skull-guides/' : '/'
+```
+
+To change the base path, modify `vite.config.ts` or set the `VITE_BASE` environment variable during build.
+
+## Usage
+
+The application loads modules from the configured repository (`runawaydevil/skull-guides`). Click on any module in the home page to view its content. Internal links to other `.md` files will navigate automatically within the application.
+
+### Supported URL Formats
+
+The system accepts three GitHub URL formats:
+
+1. Blob URL:
+   ```
+   https://github.com/owner/repo/blob/branch/path/to/file.md
+   ```
+
+2. Raw URL:
+   ```
+   https://raw.githubusercontent.com/owner/repo/branch/path/to/file.md
+   ```
+
+3. Short format:
+   ```
+   owner/repo@branch:path/to/file.md
+   ```
+
+## Project Structure
+
+```
+skull-guides/
+├── .github/
+│   └── workflows/
+│       └── pages.yml
+├── docs/                    # Markdown modules
+├── public/                  # Static assets
+│   └── sg.png
+├── src/
+│   ├── components/          # React components
+│   │   ├── Footer.tsx
+│   │   ├── Layout.tsx
+│   │   ├── MarkdownView.tsx
+│   │   ├── Toc.tsx
+│   │   └── ...
+│   ├── lib/                 # Core utilities
+│   │   ├── githubUrl.ts    # GitHub URL parser
+│   │   ├── fetchers.ts     # Fetch with cache
+│   │   ├── cache.ts        # Cache management
+│   │   ├── markdownLinks.ts # Link resolution
+│   │   └── modules.ts      # Module definitions
+│   ├── routes/             # Route components
+│   │   ├── Home.tsx
+│   │   └── Viewer.tsx
+│   ├── styles/             # Global styles
+│   │   └── app.css
+│   ├── App.tsx
+│   └── main.tsx
+├── index.html
+├── package.json
+├── vite.config.ts
+└── tsconfig.json
+```
+
+## Configuration
+
+### Environment Variables
+
+- `VITE_BASE` - Base path for Vite (default: `/skull-guides/` in production, `/` in development)
+
+### Cache System
+
+The application uses a two-layer caching system:
+
+- **Memory cache**: Runtime cache using Map (cleared on page reload)
+- **localStorage cache**: Persistent cache with 24-hour TTL
+
+Cache keys follow the pattern: `skull-guides:v1:<rawUrl>`
+
+To clear cache, clear browser localStorage or use the `clearCache()` function from `cache.ts` if exposed.
+
+## Troubleshooting
+
+### 404 on Page Reload
+
+Ensure HashRouter is being used (already configured). Verify base path in `vite.config.ts` matches your deployment path.
+
+### Images Not Loading
+
+- Verify images use relative paths within the repository
+- External images must use full URLs (http/https)
+
+### GitHub Rate Limiting
+
+The cache system helps reduce requests. If rate limited, wait a few minutes before retrying.
+
+### Files Not Found
+
+Ensure the repository exists on GitHub and files are committed to the specified branch. The application fetches files from:
+```
+https://raw.githubusercontent.com/<owner>/<repo>/<branch>/<path>
+```
+
+## License
+
+MIT License
+
+## Author
+
+runawaydevil
+
+---
+
+Copyright (c) 2024 runawaydevil

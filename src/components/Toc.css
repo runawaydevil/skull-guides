@@ -1,0 +1,61 @@
+.toc {
+  padding: 1rem;
+}
+
+.toc-title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary, #666666);
+  margin: 0 0 0.75rem 0;
+}
+
+.toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc-item {
+  margin: 0.25rem 0;
+}
+
+.toc-item-depth-1 {
+  margin-left: 0;
+  font-weight: 600;
+}
+
+.toc-item-depth-2 {
+  margin-left: 0.75rem;
+}
+
+.toc-item-depth-3 {
+  margin-left: 1.5rem;
+}
+
+.toc-item-depth-4 {
+  margin-left: 2.25rem;
+}
+
+.toc-item-depth-5 {
+  margin-left: 3rem;
+}
+
+.toc-item-depth-6 {
+  margin-left: 3.75rem;
+}
+
+.toc-link {
+  display: block;
+  color: var(--text-secondary, #666666);
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  transition: color 0.2s;
+  word-break: break-word;
+}
+
+.toc-link:hover {
+  color: var(--primary-color, #000000);
+}
