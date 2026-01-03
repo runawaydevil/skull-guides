@@ -212,4 +212,4 @@ runawaydevil
 
 ---
 
-Copyright (c) 2026 runawaydevil
+Copyright (c) 2026 runawaydevil :)
